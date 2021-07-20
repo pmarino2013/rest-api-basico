@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors"); //Para evitar restricciones desde peticiones externas
+const { dbConnection } = require("../database/config");
 //crear clase para el servidor
 class Server {
   constructor() {
@@ -7,10 +8,17 @@ class Server {
     this.port = process.env.PORT;
     this.usuariosPath = "/api/usuarios";
 
+    //conexion DB
+    this.conectarDB();
     //middleware
     this.middlewares();
     //rutas
     this.routes();
+  }
+
+  //conexion DB
+  async conectarDB() {
+    await dbConnection();
   }
 
   middlewares() {
