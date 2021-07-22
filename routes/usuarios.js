@@ -3,6 +3,7 @@ const { check } = require("express-validator"); //importo para hacer validacione
 
 //llamo middlewares que valida campos
 const { validarCampos } = require("../middlewares/validar-campos");
+const { esRoleValido, emailExiste } = require("../helpers/db-validators");
 
 const {
   usuariosGet,
@@ -25,7 +26,9 @@ router.post(
       min: 6,
     }),
     check("email", "El correo no es válido").isEmail(), //midlleware: guarda el error en caso de que no cumpla con ser un email
-    check("rol", "No es un rol permitido").isIn(["ADMIN_ROLE", "USER_ROLE"]),
+    check("email").custom(emailExiste),
+    // check("rol", "No es un rol permitido").isIn(["ADMIN_ROLE", "USER_ROLE"]),
+    check("rol").custom(esRoleValido), //vara validar el rol
     validarCampos, //valido los campos
   ],
 
