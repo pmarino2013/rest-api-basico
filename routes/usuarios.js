@@ -3,7 +3,11 @@ const { check } = require("express-validator"); //importo para hacer validacione
 
 //llamo middlewares que valida campos
 const { validarCampos } = require("../middlewares/validar-campos");
-const { esRoleValido, emailExiste } = require("../helpers/db-validators");
+const {
+  esRoleValido,
+  emailExiste,
+  usuarioIdExiste,
+} = require("../helpers/db-validators");
 
 const {
   usuariosGet,
@@ -16,7 +20,16 @@ const router = Router();
 
 router.get("/", usuariosGet);
 
-router.put("/:id", usuariosPut);
+router.put(
+  "/:id",
+  [
+    check("id", "No es un ID válido").isMongoId(), //valida si el id enviado es válido de mongo
+    check("id").custom(usuarioIdExiste), //chequeo si existe el id
+    check("rol").custom(esRoleValido), //vara validar el rol
+    validarCampos,
+  ],
+  usuariosPut
+);
 
 router.post(
   "/",
@@ -35,6 +48,14 @@ router.post(
   usuariosPost
 );
 
-router.delete("/", usuariosDelete);
+router.delete(
+  "/:id",
+  [
+    check("id", "No es un ID válido").isMongoId(), //valida si el id enviado es válido de mongo
+    check("id").custom(usuarioIdExiste), //chequeo si existe el id
+    validarCampos,
+  ],
+  usuariosDelete
+);
 
 module.exports = router;
