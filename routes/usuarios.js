@@ -3,6 +3,8 @@ const { check } = require("express-validator"); //importo para hacer validacione
 
 //llamo middlewares que valida campos
 const { validarCampos } = require("../middlewares/validar-campos");
+const { validarJWT } = require("../middlewares/validar-jwt");
+
 const {
   esRoleValido,
   emailExiste,
@@ -51,6 +53,7 @@ router.post(
 router.delete(
   "/:id",
   [
+    validarJWT,
     check("id", "No es un ID válido").isMongoId(), //valida si el id enviado es válido de mongo
     check("id").custom(usuarioIdExiste), //chequeo si existe el id
     validarCampos,
