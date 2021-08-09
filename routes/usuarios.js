@@ -2,8 +2,11 @@ const { Router } = require("express");
 const { check } = require("express-validator"); //importo para hacer validaciones
 
 //llamo middlewares que valida campos
-const { validarCampos } = require("../middlewares/validar-campos");
-const { validarJWT } = require("../middlewares/validar-jwt");
+// const { validarCampos } = require("../middlewares/validar-campos");
+// const { esAdminRole } = require("../middlewares/validar-roles");
+// const { validarJWT } = require("../middlewares/validar-jwt");
+
+const { validarCampos, esAdminRole, validarJWT } = require("../middlewares");
 
 const {
   esRoleValido,
@@ -53,7 +56,8 @@ router.post(
 router.delete(
   "/:id",
   [
-    validarJWT,
+    validarJWT, //valido token enviado en headers
+    esAdminRole, //valido que el rol sea administrador
     check("id", "No es un ID válido").isMongoId(), //valida si el id enviado es válido de mongo
     check("id").custom(usuarioIdExiste), //chequeo si existe el id
     validarCampos,
