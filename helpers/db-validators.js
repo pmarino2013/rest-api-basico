@@ -1,6 +1,7 @@
 //Validar los roles segun lo que tenga en la colección roles
 const Role = require("../models/role");
 const Usuario = require("../models/usuario");
+const Categoria = require("../models/categoria");
 
 const esRoleValido = async (rol = "") => {
   const existeRol = await Role.findOne({ rol });
@@ -27,8 +28,17 @@ const usuarioIdExiste = async (id) => {
   }
 };
 
+const existeCategoria = async (id) => {
+  const existeCat = await Categoria.findById(id);
+
+  if (!existeCat) {
+    throw new Error(`El id ${id} no existe`);
+  }
+};
+
 module.exports = {
   esRoleValido,
   emailExiste,
   usuarioIdExiste,
+  existeCategoria,
 };

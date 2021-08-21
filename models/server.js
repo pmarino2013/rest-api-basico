@@ -6,12 +6,12 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
-
+    //ruta autenticacion para token
+    this.authPath = "/api/auth";
+    //ruta categorias
+    this.categoriasPath = "/api/categorias";
     //rutas usuarios
     this.usuariosPath = "/api/usuarios";
-
-    //ruta autenticacion para token
-    this.authPath='/api/auth';
 
     //conexion DB
     this.conectarDB();
@@ -41,6 +41,8 @@ class Server {
   routes() {
     //ruta de autenticacion
     this.app.use(this.authPath, require("../routes/auth"));
+    //ruta categorias
+    this.app.use(this.categoriasPath, require("../routes/categorias"));
     //ruta de usuarios
     this.app.use(this.usuariosPath, require("../routes/usuarios"));
   }

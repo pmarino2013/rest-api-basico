@@ -75,16 +75,17 @@ const usuariosPut = async (req, res = response) => {
   }
 
   //Actualizar la data del usuario y guardar la respuesta en usuario
-  const usuario = await Usuario.findByIdAndUpdate(id, resto);
+  const usuario = await Usuario.findByIdAndUpdate(id, resto, { new: true });
 
   res.json({
-    message: "Put API - controlador",
+    message: "Usuario actualizado",
     usuario,
   });
 };
 
 const usuariosDelete = async (req, res = response) => {
   const { id } = req.params;
+
   //Borrar fisicamente
 
   // const usuario = await Usuario.findByIdAndDelete(id);
