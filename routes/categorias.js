@@ -47,6 +47,7 @@ router.put(
   "/:id",
   [
     validarJWT,
+    check("nombre", "El nombre es obligatorio").not().isEmpty(),
     check("id", "No es un ID válido").isMongoId(),
     check("id").custom(existeCategoria),
     validarCampos,

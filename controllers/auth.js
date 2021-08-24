@@ -3,15 +3,12 @@ const Usuario = require("../models/usuario");
 const bcrypt = require("bcryptjs");
 const { generarJWT } = require("../helpers/generar-jwt");
 
-
 const login = async (req, res = response) => {
   const { email, password } = req.body;
 
   try {
     //Verificar si el mail existe
-
     const usuario = await Usuario.findOne({ email });
-
     if (!usuario) {
       return res.status(400).json({
         msg: "Usuario o contraseña incorrectos",

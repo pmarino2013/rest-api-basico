@@ -12,6 +12,10 @@ class Server {
     this.categoriasPath = "/api/categorias";
     //rutas usuarios
     this.usuariosPath = "/api/usuarios";
+    //rutas producto
+    this.productosPath = "/api/productos";
+    //Buscar cosas
+    this.buscarPath = "/api/buscar";
 
     //conexion DB
     this.conectarDB();
@@ -45,6 +49,10 @@ class Server {
     this.app.use(this.categoriasPath, require("../routes/categorias"));
     //ruta de usuarios
     this.app.use(this.usuariosPath, require("../routes/usuarios"));
+    //ruta de productos
+    this.app.use(this.productosPath, require("../routes/productos"));
+    //ruta de buscar
+    this.app.use(this.buscarPath, require("../routes/buscar"));
   }
   //funcion para escuchar el puerto
   listen() {

@@ -74,8 +74,9 @@ const crearCategorias = async (req, res = response) => {
 //Actualizar categoria--------------------------------
 const actualizarCategoria = async (req, res = response) => {
   const { id } = req.params;
-  const { _id, ...resto } = req.body;
+  const { _id, estado, usuario, ...resto } = req.body;
   resto.nombre = resto.nombre.toUpperCase();
+  resto.usuario = req.usuario._id;
 
   const categoria = await Categoria.findByIdAndUpdate(id, resto, {
     new: true,
