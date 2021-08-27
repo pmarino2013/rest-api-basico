@@ -98,7 +98,7 @@ const crearProductos = async (req, res = response) => {
 //Actualizar categoria--------------------------------
 const actualizarProducto = async (req, res = response) => {
   const { id } = req.params;
-  const { _id, estado, usuario, ...resto } = req.body;
+  const { _id, estado, ...resto } = req.body;
 
   if (resto.nombre) {
     resto.nombre = resto.nombre.toUpperCase();

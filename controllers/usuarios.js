@@ -46,6 +46,15 @@ const usuariosGet = async (req = request, res = response) => {
   });
 };
 
+const usuarioGetId = async (req = request, res = response) => {
+  const { id } = req.params;
+  const usuario = await Usuario.findById(id);
+
+  res.json({
+    usuario,
+  });
+};
+
 const usuariosPost = async (req, res = response) => {
   const { nombre, email, password, rol } = req.body; //desestructuro solo lo que necesito guardar obligatoriamente
 
@@ -102,6 +111,7 @@ const usuariosDelete = async (req, res = response) => {
 
 module.exports = {
   usuariosGet,
+  usuarioGetId,
   usuariosPut,
   usuariosPost,
   usuariosDelete,

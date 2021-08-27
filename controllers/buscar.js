@@ -17,8 +17,10 @@ const buscarUsuarios = async (termino = "", res = response) => {
       results: usuario ? [usuario] : [],
     });
   }
-
-  const regex = new RegExp(termino, "i");
+  /*
+Las expresiones regulares son patrones utilizados para encontrar una determinada combinación de caracteres dentro de una cadena de texto. En JavaScript, las expresiones regulares también son objetos.
+*/
+  const regex = new RegExp(termino, "i"); //insensible a mayusculas y minusculas
 
   const usuarios = await Usuario.find({
     $or: [{ nombre: regex }, { email: regex }],
@@ -82,6 +84,7 @@ const buscarProductos = async (termino = "", res = response) => {
   });
 };
 
+//funcion principal
 const buscar = (req, res = response) => {
   const { coleccion, termino } = req.params;
 

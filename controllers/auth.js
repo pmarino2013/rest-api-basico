@@ -11,6 +11,7 @@ const login = async (req, res = response) => {
     const usuario = await Usuario.findOne({ email });
     if (!usuario) {
       return res.status(400).json({
+        ok: false,
         msg: "Usuario o contraseña incorrectos",
       });
     }
@@ -18,6 +19,7 @@ const login = async (req, res = response) => {
     //Si el usuario está activo
     if (!usuario.estado) {
       return res.status(400).json({
+        ok: false,
         msg: "Usuario o contraseña incorrectos - estado: false",
       });
     }
@@ -26,6 +28,7 @@ const login = async (req, res = response) => {
     const validPassword = bcrypt.compareSync(password, usuario.password);
     if (!validPassword) {
       return res.status(400).json({
+        ok: false,
         msg: "Usuario o contraseña incorrectos",
       });
     }
@@ -34,6 +37,7 @@ const login = async (req, res = response) => {
     const token = await generarJWT(usuario._id);
 
     res.json({
+      ok: true,
       msg: "Login OK",
       usuario,
       token,

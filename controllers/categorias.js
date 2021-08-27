@@ -47,34 +47,29 @@ const obtenerCategoria = async (req, res = response) => {
 //Crear categoria
 const crearCategorias = async (req, res = response) => {
   const nombre = req.body.nombre.toUpperCase();
-
   const categoriaDB = await Categoria.findOne({ nombre });
-
   if (categoriaDB) {
     return res.status(400).json({
       msg: `La categoría ${categoriaDB.nombre} ya existe`,
     });
   }
-
   //Generar la data
   const data = {
     nombre,
     usuario: req.usuario._id,
   };
-
   const categoria = new Categoria(data);
 
   //Guardar DB
-
   await categoria.save();
-
   res.status(201).json(categoria);
 };
 
 //Actualizar categoria--------------------------------
 const actualizarCategoria = async (req, res = response) => {
   const { id } = req.params;
-  const { _id, estado, usuario, ...resto } = req.body;
+  const { _id, estado, ...resto } = req.body;
+
   resto.nombre = resto.nombre.toUpperCase();
   resto.usuario = req.usuario._id;
 

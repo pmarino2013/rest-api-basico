@@ -16,6 +16,7 @@ const {
 
 const {
   usuariosGet,
+  usuarioGetId,
   usuariosPut,
   usuariosPost,
   usuariosDelete,
@@ -25,9 +26,20 @@ const router = Router();
 
 router.get("/", usuariosGet);
 
+router.get(
+  "/:id",
+  [
+    check("id", "No es un ID válido").isMongoId(),
+    // check("id").custom(existeCategoria),
+    validarCampos,
+  ],
+  usuarioGetId
+);
+
 router.put(
   "/:id",
   [
+    validarJWT,
     check("id", "No es un ID válido").isMongoId(), //valida si el id enviado es válido de mongo
     check("id").custom(usuarioIdExiste), //chequeo si existe el id
     check("rol").custom(esRoleValido), //vara validar el rol
