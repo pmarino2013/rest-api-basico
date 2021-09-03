@@ -19,6 +19,7 @@ const obtenerProductos = async (req, res = response) => {
   const [total, productos] = await Promise.all([
     Producto.countDocuments({ estado: true }),
     Producto.find({ estado: true })
+      .sort("nombre")
       .skip(desde)
       .limit(limite)
       .populate("usuario", "nombre email")
